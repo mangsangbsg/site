@@ -172,32 +172,28 @@
         }
         .btn-close { background: white; color: var(--primary-blue); }
         .btn-disable { background: var(--primary-blue); color: white; }
+        .btn-popup:hover { opacity: 0.8; }
 
         footer { background: #333; color: #ccc; padding: 45px 0; font-size: 13px; text-align: center; margin-top: 60px; }
 
         /* ----------------------------------------------------------------- */
-        /* 📱 [신규 추가] 모바일 반응형 스타일 (사용자님의 기존 내용을 보호함) */
+        /* 📱 [모바일 최적화 핵심 추가] 기존 레이아웃 보호를 위한 미디어 쿼리 */
         /* ----------------------------------------------------------------- */
         @media (max-width: 768px) {
             .container { padding: 0 15px; }
-            .header-top { flex-direction: column; text-align: center; gap: 10px; }
+            .header-top { flex-direction: column; gap: 10px; text-align: center; }
             nav ul { flex-wrap: wrap; }
-            nav ul li { width: 33.33%; flex: none; }
+            nav ul li { width: 33.33%; flex: none; } /* 메뉴 3개씩 배열 */
             nav ul li a { font-size: 13px; padding: 12px 0; }
-            .status-content { flex-direction: column; align-items: flex-start; padding-left: 20px; gap: 8px; }
-            .main-layout { grid-template-columns: 1fr; }
+            .main-layout { grid-template-columns: 1fr; } /* 사이드바를 아래로 보냄 */
             .hero { height: 220px; }
             .hero h1 { font-size: 28px; }
-            .hero p { font-size: 15px; }
-            .citizen-wiki-grid { grid-template-columns: 1fr; }
-            .wiki-card { flex-direction: column; height: auto; }
-            .wiki-thumb { width: 100%; height: 220px; }
-            .area-info-row { grid-template-columns: 1fr; }
-            .area-label { width: fit-content; margin-bottom: 10px; }
-            .welcome-popup { width: 85%; padding: 20px; }
-            .welcome-popup h2 { font-size: 18px; }
-            .welcome-popup p { font-size: 13px; }
-            section { overflow-x: auto; } /* 표가 넘칠 경우 가로 스크롤 허용 */
+            .citizen-wiki-grid { grid-template-columns: 1fr; } /* 카드 너비 확보 */
+            .wiki-card { flex-direction: column; height: auto; } /* 이미지 위, 글자 아래로 배치 (글자 잘림 방지 핵심) */
+            .wiki-thumb { width: 100%; height: 250px; } /* 이미지 공간 확보 */
+            .area-info-row { grid-template-columns: 1fr; } /* 지역안내 레이블 위로 */
+            .welcome-popup { width: 85%; }
+            section { overflow-x: auto; } /* 표가 넓을 경우 가로 스크롤 허용 */
         }
 
         .page-content { display: none; }
@@ -387,7 +383,7 @@
             <div class="area-image-box"><img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/lo/13.png"></div>
             <div class="area-info-row">
                 <div class="area-label">동부 (생활)</div>
-                <div><h3>생활 및 물류의 거점</h3><p>외부와 물자를 주고받는 우체국과 레빗빌라가 있습니다. 배달부 토수아의 주 활동 거점입니다.</p></div>
+                <div><h3>생활 및 물류의 거점</h3><p>외부와 물자를 주고받는 우체국과 레빗빌라가 있습니다.</p></div>
             </div>
         </div>
         <div class="area-section">
@@ -419,7 +415,7 @@
                     <span class="wiki-tag" style="background:#e3f2fd; color:#1976d2;">인간 · 군수</span>
                     <h3>홍 윤설 (25세)</h3>
                     <div class="meta"><b>성격:</b> 의로움, 사무적 | <b>설화:</b> 홍길동전</div>
-                    <div class="desc">홍길동의 후손으로 율도의 행정을 책임집니다. 도술 능력을 겸비하고 있으며, 공정한 행정을 펼칩니다.</div>
+                    <div class="desc">홍길동의 후손으로 사무적이고 의로운 군수입니다. 흑단발에 하늘색 조끼가 특징입니다.</div>
                 </div>
             </div>
             <div class="wiki-card">
@@ -474,7 +470,7 @@
                     <span class="wiki-tag" style="background:#f3e5f5; color:#7b1fa2;">역신 · 의료</span>
                     <h3>아라 연 (나이 미상)</h3>
                     <div class="meta"><b>성격:</b> 음침 | <b>설화:</b> 처용가</div>
-                    <div class="desc">율도 보건소장입니다. 다소 음침한 분위기를 풍기지만 군민의 건강을 책임지는 전문가입니다.</div>
+                    <div class="desc">율도 보건소장입니다. 다소 음침한 분위기를 풍기지만 군민의 건강을 돌보는 전문가입니다.</div>
                 </div>
             </div>
             <div class="wiki-card">
