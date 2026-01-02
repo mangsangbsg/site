@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강원도 용궁시 율도군청 공식 홈페이지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #004d99;
+            --accent-red: #d9534f;
+            --light-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--light-bg);
+            color: #333;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* 상단 헤더 */
+        header { background: #fff; border-bottom: 3px solid var(--primary-blue); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary-blue); text-decoration: none; cursor: pointer; display: flex; align-items: center; }
+        .logo span { font-size: 13px; color: #666; margin-left: 10px; font-weight: 400; }
+        .top-info { font-size: 13px; color: #444; }
+
+        /* 네비게이션 */
+        nav { background: var(--primary-blue); }
+        nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
+        nav ul li { flex: 1; text-align: center; }
+        nav ul li a { display: block; padding: 15px 0; color: white; text-decoration: none; font-weight: 500; font-size: 15px; cursor: pointer; }
+        nav ul li a:hover { background: var(--secondary-blue); }
+
+        /* 상태 바 */
+        .status-bar { background: #f1f3f5; border-bottom: 1px solid var(--border-color); padding: 10px 0; font-size: 13px; }
+        .status-content { display: flex; justify-content: space-around; }
+        .status-item { display: flex; align-items: center; gap: 5px; }
+        .status-item b { color: var(--accent-red); }
+
+        /* 메인 페이지 레이아웃 (2컬럼) */
+        .main-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 30px; }
+
+        /* 히어로 섹션 */
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1502933691298-84fc14542831?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; background-position: center; height: 320px;
+            display: flex; align-items: center; justify-content: center; color: white; text-align: center; border-radius: 5px; margin-bottom: 30px;
+        }
+        .hero h1 { font-size: 42px; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero p { font-size: 18px; opacity: 0.9; }
+
+        /* 섹션 공통 스타일 */
+        section { background: white; padding: 25px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        h2 { border-left: 5px solid var(--primary-blue); padding-left: 12px; margin-top: 0; font-size: 20px; color: #222; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+
+        /* 테이블 스타일 */
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        table th, table td { padding: 14px 12px; border-bottom: 1px solid #eee; text-align: left; }
+        table th { background: #f8f9fa; color: #666; font-weight: 500; border-top: 1px solid #eee; }
+
+        /* 사이드바 스타일 */
+        .sidebar section h3 { font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sidebar ul { list-style: disc; padding-left: 20px; font-size: 14px; line-height: 2.2; color: #444; }
+        
+        .mayor-card { background: var(--primary-blue) !important; color: white; text-align: center; }
+        .mayor-card h3 { color: white !important; border-bottom: 1px solid rgba(255,255,255,0.2) !important; justify-content: center; }
+        .mayor-img { width: 110px; height: 110px; background: #fff; border-radius: 50%; margin: 15px auto; overflow: hidden; border: 3px solid rgba(255,255,255,0.3); }
+        .mayor-img img { width: 100%; height: 100%; object-fit: cover; }
+        .mayor-quote { font-style: normal; font-size: 13px; opacity: 0.9; margin-top: 10px; line-height: 1.4; }
+
+        /* 인물 정보 페이지 (Wiki Grid) */
+        .citizen-wiki-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .wiki-card { 
+            display: flex; 
+            background: white; 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            height: auto;
+            min-height: 200px;
+            overflow: hidden; 
+            transition: 0.3s; 
+        }
+        
+        .wiki-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .wiki-thumb { width: 135px; min-width: 135px; background: #eef2f7; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; cursor: zoom-in; }
+        .wiki-thumb img { width: 100%; height: 100%; object-fit: contain; }
+        .wiki-info { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
+        .wiki-tag { font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 4px; background: #eee; margin-bottom: 8px; display: inline-block; width: fit-content; }
+        .wiki-info h3 { margin: 0 0 5px 0; font-size: 19px; }
+        .wiki-info .meta { font-size: 12px; color: #888; margin-bottom: 10px; line-height: 1.4; }
+        .wiki-info .desc { font-size: 13px; color: #555; line-height: 1.5; display: block; overflow: visible; }
+
+        /* 지역 안내 이미지 */
+        .area-section { margin-bottom: 40px; }
+        .area-image-box { width: 100%; aspect-ratio: 3 / 1; background: #e9ecef; border-radius: 10px; overflow: hidden; margin-bottom: 15px; border: 1px solid #ddd; }
+        .area-image-box img { width: 100%; height: 100%; object-fit: cover; }
+        .area-info-row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: start; }
+        .area-label { background: var(--primary-blue); color: white; padding: 5px 15px; border-radius: 4px; font-weight: bold; text-align: center; }
+
+        /* 민원 폼 스타일 */
+        .petition-form input, .petition-form textarea, .petition-form select {
+            width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;
+        }
+        .btn-submit { background: var(--primary-blue); color: white; border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* 이미지 확대 모달 스타일 */
+        #imgModal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            cursor: zoom-out;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-height: 90vh;
+            max-width: 90%;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* [수정] 안내 팝업 스타일 */
+        .welcome-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 20000;
+        }
+        .welcome-popup {
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 30px; border-radius: 15px;
+            width: 420px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid var(--primary-blue);
+        }
+        .welcome-popup h2 { color: var(--primary-blue); margin-top: 0; border: none; padding: 0; justify-content: center; font-size: 22px; }
+        .welcome-popup p { font-size: 15px; line-height: 1.6; margin: 20px 0; color: #444; }
+        
+        /* 팝업 버튼 컨테이너 */
+        .popup-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn-popup {
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+            border: 1px solid var(--primary-blue);
+            flex: 1;
+        }
+        .btn-close {
+            background: white;
+            color: var(--primary-blue);
+        }
+        .btn-disable {
+            background: var(--primary-blue);
+            color: white;
+        }
+        .btn-popup:hover { opacity: 0.8; }
+
+        footer { background: #333; color: #ccc; padding: 45px 0; font-size: 13px; text-align: center; margin-top: 60px; }
+
+        .page-content { display: none; }
+        .active { display: block; }
+    </style>
+</head>
+<body>
+
+<div id="welcomePopup" class="welcome-popup-overlay">
+    <div class="welcome-popup">
+        <h2>🌊 율도군청 가이드</h2>
+        <p>
+            사이트 상단의 메뉴 버튼들<br>
+            (<b>율도군 소개, 군정 소식, 율도 지역안내 등</b>)을<br>
+            각각 클릭하여 상세 정보를 확인하실 수 있습니다.
+        </p>
+        <div class="popup-buttons">
+            <button class="btn-popup btn-close" onclick="closeWelcomePopupOnly()">닫기</button>
+            <button class="btn-popup btn-disable" onclick="disableWelcomePopupForever()">다시 보지 않기</button>
+        </div>
+    </div>
+</div>
+
+<div id="imgModal" onclick="this.style.display='none'">
+    <img class="modal-content" id="modalImg">
+</div>
+
+<header>
+    <div class="container header-top">
+        <div class="logo" onclick="showPage('home')">
+            🌊 율도군청 <span>강원도 용궁시 율도군</span>
+        </div>
+        <div class="top-info">오늘의 기온: 18°C | 바다 상태: 평온</div>
+    </div>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a onclick="showPage('intro')">율도군 소개</a></li>
+                <li><a onclick="showPage('news')">군정 소식</a></li>
+                <li><a onclick="showPage('area')">율도 지역안내</a></li>
+                <li><a onclick="showPage('citizen')">율도 시민 정보</a></li>
+                <li><a onclick="showPage('mayor')">열린 군수실</a></li>
+                <li><a onclick="showPage('petition')">전자민원</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="status-bar">
+    <div class="container status-content">
+        <div class="status-item">🕒 요술 맷돌 가동 현황: <b>오후 2시 해무 발생 예정</b></div>
+        <div class="status-item">📡 통신 상태: 정상 (맷돌 가동 시 제한됨)</div>
+        <div class="status-item">🐾 해태 순찰구역: 읍내 및 선착장 일대</div>
+    </div>
+</div>
+
+<div id="home" class="page-content active">
+    <div class="container">
+        <div class="hero">
+            <div>
+                <h1>사람과 설화가 함께 숨 쉬는 신비의 섬</h1>
+                <p>청룡의 가호 아래, 율도군민 모두가 행복한 미래를 만듭니다.</p>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="content-area">
+                <section>
+                    <h2>📍 율도 지역안내</h2>
+                    <table>
+                        <thead>
+                            <tr><th>구역</th><th>주요 거점</th><th>특징</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>중앙(읍내)</td><td>율도군청, 시장</td><td>홍윤설 군수 집무, 행정 및 상권 중심</td></tr>
+                            <tr><td>서부(청림)</td><td>청림산, 서낭당</td><td>영험하고 신비로운 기운</td></tr>
+                            <tr><td>동부(생활)</td><td>우체국, 레빗빌라</td><td>물류 및 수인 주거 단지</td></tr>
+                            <tr><td>남부(관문)</td><td>율도 선착장</td><td>외부 연결 및 맷돌 관리</td></tr>
+                            <tr><td>북부(의료)</td><td>보건소</td><td>시민 건강 및 방역 책임</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>👥 율도 시민 정보 요약</h2>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; font-size:13px;">
+                        <div style="border:1px solid #eee; padding:15px; border-radius:5px;">
+                            <h4 style="margin:0 0 10px 0; color:var(--primary-blue);">일반 시민</h4>
+                            <p>도술을 사용하는 인간과 정착한 귀신 시민들입니다.</p>
+                        </div>
+                        <div style="border:1px solid #eee; padding:15px; border-radius:5px;">
+                            <h4 style="margin:0 0 10px 0; color:var(--primary-blue);">영물 수인 가문</h4>
+                            <p>호랑, 토수아 등 유서 깊은 영물 가문이 거주합니다.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="sidebar">
+                <section>
+                    <h3>📢 군정 공지</h3>
+                    <ul>
+                        <li>2026 상반기 통주 이용권 배부</li>
+                        <li>청룡팀 씨름 대회 선수 모집</li>
+                        <li>신규 해태 순찰견 훈련 안내</li>
+                        <li>은월여관 '여우구슬' 분실 주의</li>
+                    </ul>
+                </section>
+
+                <section class="mayor-card">
+                    <h3>군수실</h3>
+                    <div class="mayor-img">
+                        <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/홍윤설.png" alt="홍윤설">
+                    </div>
+                    <p><b>홍 윤 설</b></p>
+                    <p class="mayor-quote">"의로운 도술 행정으로<br>보답하겠습니다."</p>
+                </section>
+
+                <section>
+                    <h3>🛍️ 추천 상점</h3>
+                    <div style="font-size: 14px; line-height: 2.2;">
+                        🥐 <b>호떡:</b> 영물 호랑의 떡집<br>
+                        🏨 <b>은월여관:</b> 구미호 도아 운영<br>
+                        🏪 <b>도깨비 슈퍼:</b> 도지화의 만물상<br>
+                        🏠 <b>령화 부동산:</b> 섬 내 최고 매물
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="intro" class="page-content">
+    <div class="container" style="padding-top: 40px;">
+        <section>
+            <h2>🌊 율도군 개요</h2>
+            <p>율도군은 강원도 용궁시 산하의 특별 행정 구역으로, 동해의 신비로운 정기를 머금은 청룡의 구역에 위치하고 있습니다.</p>
+            <p>1945년 광복과 함께 대한민국 행정 체계에 정식 포함되었으며, 인간과 설화 속 존재들이 조화롭게 공존하는 전국 유일의 도서 지역입니다.</p>
+            <h3 style="margin-top:20px;">📜 군정 목표</h3>
+            <ul>
+                <li>홍길동 정신을 계승한 의롭고 공정한 행정 실현</li>
+                <li>인간과 영물 수인의 문화적 상생 환경 조성</li>
+                <li>요술 맷돌 및 통주 시스템을 통한 안전한 자립 경제 구축</li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+<div id="news" class="page-content">
+    <div class="container" style="padding-top: 40px;">
+        <section>
+            <h2>📢 율도 소식통</h2>
+            <table>
+                <thead>
+                    <tr><th>분류</th><th>제목</th><th>날짜</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>[공지]</td><td>2026년 1월 요술 맷돌 정기 점검 일정 안내 (해무 주의)</td><td>2026-01-02</td></tr>
+                    <tr><td>[문화]</td><td>제32회 청룡배 씨름대회 율도군 예선 참가자 모집</td><td>2026-01-01</td></tr>
+                    <tr><td>[물류]</td><td>설 명절 대비 우체국 '통주' 특별 수송 기간 안내</td><td>2025-12-30</td></tr>
+                    <tr><td>[보건]</td><td>겨울철 독감 예방을 위한 아라연 보건소장 특별 방역 실시</td><td>2025-12-28</td></tr>
+                    <tr><td>[상업]</td><td>도깨비 슈퍼마트 신년 맞이 '요술 맷돌 쌀' 할인 행사</td><td>2025-12-25</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+<div id="area" class="page-content">
+    <div class="container" style="padding-top: 40px;">
+        <h2>📍 율도 지리 상세 안내</h2>
+        <div class="area-section">
+            <div class="area-image-box"><img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/lo/2.png"></div>
+            <div class="area-info-row">
+                <div class="area-label">중앙 (읍내)</div>
+                <div><h3>행정 및 상업의 중심</h3><p>율도군청과 전통 시장이 위치합니다. 모든 행정 업무가 처리되며 주요 상권이 형성되어 있습니다.</p></div>
+            </div>
+        </div>
+        <div class="area-section">
+            <div class="area-image-box"><img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/lo/33.png"></div>
+            <div class="area-info-row">
+                <div class="area-label">서부 (청림)</div>
+                <div><h3>영험한 기운의 구역</h3><p>청림산과 묘지, 서낭당이 위치합니다. 영험한 기운이 강하며 구령화의 전원주택이 북서쪽에 있습니다.</p></div>
+            </div>
+        </div>
+        <div class="area-section">
+            <div class="area-image-box"><img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/lo/13.png"></div>
+            <div class="area-info-row">
+                <div class="area-label">동부 (생활)</div>
+                <div><h3>생활 및 물류의 거점</h3><p>외부와 물자를 주고받는 우체국과 레빗빌라가 있습니다.</p></div>
+            </div>
+        </div>
+        <div class="area-section">
+            <div class="area-image-box"><img src="https://raw.githubusercontent.com/mangsangbsg/yd/heads/main/lo/10.png"></div>
+            <div class="area-info-row">
+                <div class="area-label">북부 (의료)</div>
+                <div><h3>율도 보건소</h3><p>역신 아라연 소장이 상주하는 의료 구역입니다. 섬 전체의 방역을 책임집니다.</p></div>
+            </div>
+        </div>
+        <div class="area-section">
+            <div class="area-image-box"><img src="https://raw.githubusercontent.com/mangsangbsg/yd/heads/main/lo/1.png"></div>
+            <div class="area-info-row">
+                <div class="area-label">남부 (관문)</div>
+                <div><h3>율도 선착장 및 해변</h3><p>외부 세계와 연결되는 유일한 통로이자 요술 맷돌 관리소가 있는 곳입니다.</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="citizen" class="page-content">
+    <div class="container" style="padding-top: 40px;">
+        <h2 style="border:none; font-size: 24px; margin-bottom: 30px;">👥 율도 주요 인물 정보</h2>
+        <div class="citizen-wiki-grid">
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/홍윤설.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#e3f2fd; color:#1976d2;">인간 · 군수</span>
+                    <h3>홍 윤설 (25세)</h3>
+                    <div class="meta"><b>성격:</b> 의로움, 사무적 | <b>설화:</b> 홍길동전</div>
+                    <div class="desc">홍길동의 후손으로 율도의 행정을 책임집니다. 도술 능력을 겸비하고 있으며, 공정한 행정을 펼칩니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/도지화.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#e8f5e9; color:#2e7d32;">도깨비 · 상업</span>
+                    <h3>도 지화 (약 400세)</h3>
+                    <div class="meta"><b>성격:</b> 정직, 장난기, 알파녀 | <b>설화:</b> 혹부리영감, 도깨비방망이</div>
+                    <div class="desc">'도깨비 슈퍼마트' 주인입니다. 씨름을 좋아하며 정직하면서도 장난기가 넘칩니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/도아.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#ffebee; color:#b71c1c;">요괴 · 숙박</span>
+                    <h3>도 아 (약 900세)</h3>
+                    <div class="meta"><b>성격:</b> 요염, 도도 | <b>설화:</b> 여우누이</div>
+                    <div class="desc">'은월여관' 운영 구미호입니다. 요염하고 지능적이며 고풍스러운 말투를 사용합니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/호랑.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#fff3e0; color:#e65100;">영물 수인 · 상업</span>
+                    <h3>호 랑 (약 300세)</h3>
+                    <div class="meta"><b>성격:</b> 호쾌, 자상 | <b>설화:</b> 단군신화, 김현감호 외</div>
+                    <div class="desc">'호떡' 주인입니다. 호쾌한 성격 뒤에 자상함을 감추고 있는 영물입니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/창귀.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#f5f5f5; color:#616161;">귀신 · 거주</span>
+                    <h3>창 귀 (강씨 & 박씨)</h3>
+                    <div class="meta"><b>강씨:</b> 조신, 현모양처 | <b>박씨:</b> 츤데레</div>
+                    <div class="desc">호랑의 부인들입니다. 조선 후기의 강옥금 여사와 구한말의 박선영 여사가 머물고 있습니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/아라연.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#f3e5f5; color:#7b1fa2;">역신 · 의료</span>
+                    <h3>아라 연 (나이 미상)</h3>
+                    <div class="meta"><b>성격:</b> 음침 | <b>설화:</b> 처용가</div>
+                    <div class="desc">율도 보건소장입니다. 다소 음침한 분위기를 풍기지만 군민의 건강을 돌보는 전문가입니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/토수아.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#fce4ec; color:#c2185b;">영물 수인 · 물류</span>
+                    <h3>토 수아 (26세)</h3>
+                    <div class="meta"><b>성격:</b> 발랄, 겁쟁이 | <b>설화:</b> 별주부전</div>
+                    <div class="desc">MZ세대 배달부입니다. 달리기는 누구보다 빠르지만 의외로 겁이 많은 성격입니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/구령화.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#efebe9; color:#4e342e;">영물 수인 · 부동산</span>
+                    <h3>구 령화 (약 200세)</h3>
+                    <div class="meta"><b>성격:</b> 내성적, 느긋, 집순이 | <b>설화:</b> 구렁덩덩, 까치</div>
+                    <div class="desc">부동산 부자입니다. 느긋한 성격으로 현대식 전원주택에서 주로 시간을 보냅니다.</div>
+                </div>
+            </div>
+            <div class="wiki-card">
+                <div class="wiki-thumb" onclick="zoomImage(this.querySelector('img').src)">
+                    <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/그믐.png">
+                </div>
+                <div class="wiki-info">
+                    <span class="wiki-tag" style="background:#eceff1; color:#263238;">어둑시니 · 거주</span>
+                    <h3>그 믐 (나이 미상)</h3>
+                    <div class="meta"><b>성격:</b> 음침, 소심 | <b>설화:</b> 어둑시니 민담</div>
+                    <div class="desc">관심을 먹고 자라는 어둑시니입니다. 소심한 성격 탓에 그림자 속에서 타인을 지켜봅니다.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mayor" class="page-content">
+    <div class="container" style="padding-top: 40px;">
+        <section style="text-align:center;">
+            <h2>🏛️ 열린 군수실</h2>
+            <div style="margin: 20px 0;">
+                <img src="https://raw.githubusercontent.com/mangsangbsg/yd/refs/heads/main/ch/홍윤설.png" style="width:200px; border-radius:10px; border:3px solid var(--primary-blue);">
+            </div>
+            <h3>"도술로 다스리는 의로운 행정, 율도의 미래입니다."</h3>
+            <p style="max-width:800px; margin:20px auto; line-height:1.8;">
+                안녕하십니까, 제32대 율도군수 홍윤설입니다.<br>
+                우리 율도는 홍길동 정신을 이어받아, 인간과 영물이 차별 없이 공존하는 낙토를 지향합니다.<br>
+                군민 여러분의 작은 목소리에도 귀 기울이며, 도술적 변수에도 흔들리지 않는 튼튼한 행정을 약속드립니다.
+            </p>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:30px;">
+                <div style="background:#f4f4f4; padding:20px; border-radius:5px;"><h4>공약 1</h4><p>요술 맷돌 자동화</p></div>
+                <div style="background:#f4f4f4; padding:20px; border-radius:5px;"><h4>공약 2</h4><p>통주 배송 전국 확대</p></div>
+                <div style="background:#f4f4f4; padding:20px; border-radius:5px;"><h4>공약 3</h4><p>영물 주거복지 향상</p></div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div id="petition" class="page-content">
+    <div class="container" style="padding-top: 40px;">
+        <section class="petition-form">
+            <h2>✍️ 군민 신문고 (전자민원)</h2>
+            <p>율도 생활 중 불편한 점이나 도술적 민원이 있다면 언제든 작성해 주세요.</p>
+            <form onsubmit="alert('민원이 접수되었습니다.'); return false;">
+                <input type="text" placeholder="성함 (또는 종족명)">
+                <select>
+                    <option>민원 분류 선택</option>
+                    <option>도술/마법 관련</option>
+                    <option>영물/수인 거주 관련</option>
+                    <option>요술 맷돌/해무 관련</option>
+                    <option>통주/택배 배송 관련</option>
+                    <option>기타 일반 민원</option>
+                </select>
+                <textarea rows="6" placeholder="민원 내용을 상세히 작성해 주세요."></textarea>
+                <button type="submit" class="btn-submit">민원 접수하기</button>
+            </form>
+        </section>
+
+        <section>
+            <h3>📄 최근 민원 처리 현황</h3>
+            <table>
+                <thead>
+                    <tr><th>상태</th><th>제목</th><th>작성자</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>[완료]</td><td>서부 청림산 부근 도깨비불 소음 민원</td><td>김**</td></tr>
+                    <tr><td>[완료]</td><td>통주 안에서 '똑똑' 소리가 너무 크게 납니다</td><td>이**</td></tr>
+                    <tr><td>[답변중]</td><td>요술 맷돌 해무 때문에 빨래가 안 말라요</td><td>박**</td></tr>
+                    <tr><td>[완료]</td><td>배달 토끼 수아님이 너무 빨라 담벼락이 무너졌습니다</td><td>최**</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <p><b>강원도 용궁시 율도군청</b></p>
+        <p>(24501) 강원도 용궁시 율도군 율도중앙로 1 | 대표전화: 033-YULDO-2026</p>
+        <p>Copyright © 2026 Yuldo-gun. All Rights Reserved. 본 사이트는 사신도 청룡의 비호 하에 운영됩니다.</p>
+    </div>
+</footer>
+
+<script>
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-content');
+        pages.forEach(page => page.classList.remove('active'));
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    }
+
+    function zoomImage(imgSrc) {
+        const modal = document.getElementById("imgModal");
+        const modalImg = document.getElementById("modalImg");
+        modal.style.display = "block";
+        modalImg.src = imgSrc;
+    }
+
+    /* [수정된 팝업 스크립트] */
+    window.onload = function() {
+        if (!localStorage.getItem('yuldoPopupShown')) {
+            document.getElementById('welcomePopup').style.display = 'block';
+        }
+    };
+
+    // '닫기' 버튼: 창만 닫음
+    function closeWelcomePopupOnly() {
+        document.getElementById('welcomePopup').style.display = 'none';
+    }
+
+    // '다시 보지 않기' 버튼: 데이터 저장 후 닫음
+    function disableWelcomePopupForever() {
+        document.getElementById('welcomePopup').style.display = 'none';
+        localStorage.setItem('yuldoPopupShown', 'true');
+    }
+</script>
+
+</body>
+</html>
